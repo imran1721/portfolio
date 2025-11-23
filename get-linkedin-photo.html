@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get LinkedIn Profile Picture</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0077b5;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #0077b5;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px 10px 0;
+        }
+        button:hover {
+            background: #005885;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+        .instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Get LinkedIn Profile Picture</h1>
+        
+        <div class="instructions">
+            <h3>Instructions:</h3>
+            <ol>
+                <li>Go to your LinkedIn profile: <a href="https://www.linkedin.com/in/imran-ansari-a4b178199/" target="_blank">https://www.linkedin.com/in/imran-ansari-a4b178199/</a></li>
+                <li>Right-click on your profile picture</li>
+                <li>Select "Open image in new tab" or "Copy image address"</li>
+                <li>Copy the image URL and paste it below, OR</li>
+                <li>Download the image and save it as <code>profile.jpg</code> in the <code>public</code> folder</li>
+            </ol>
+        </div>
+
+        <div>
+            <label for="linkedinUrl">LinkedIn Profile URL:</label>
+            <input 
+                type="text" 
+                id="linkedinUrl" 
+                placeholder="https://www.linkedin.com/in/imran-ansari-a4b178199/"
+                value="https://www.linkedin.com/in/imran-ansari-a4b178199/"
+            />
+            <button onclick="getProfilePicture()">Get Profile Picture URL</button>
+        </div>
+
+        <div>
+            <label for="imageUrl">Or paste image URL directly:</label>
+            <input 
+                type="text" 
+                id="imageUrl" 
+                placeholder="https://media.licdn.com/dms/image/..."
+            />
+            <button onclick="previewImage()">Preview Image</button>
+        </div>
+
+        <div id="result" class="result" style="display: none;">
+            <h3>Result:</h3>
+            <div id="imagePreview"></div>
+            <p id="imageUrlText"></p>
+            <button onclick="downloadImage()">Download Image</button>
+        </div>
+    </div>
+
+    <script>
+        async function getProfilePicture() {
+            const profileUrl = document.getElementById('linkedinUrl').value;
+            const resultDiv = document.getElementById('result');
+            const imagePreview = document.getElementById('imagePreview');
+            const imageUrlText = document.getElementById('imageUrlText');
+            
+            resultDiv.style.display = 'block';
+            imagePreview.innerHTML = '<p>Loading...</p>';
+            
+            // Note: LinkedIn doesn't allow direct access to profile pictures via their API without authentication
+            // This is a helper to extract the URL if you can get it manually
+            imageUrlText.innerHTML = `
+                <p><strong>Note:</strong> LinkedIn profile pictures require authentication to access programmatically.</p>
+                <p><strong>Easiest method:</strong></p>
+                <ol>
+                    <li>Go to your LinkedIn profile</li>
+                    <li>Right-click on your profile picture</li>
+                    <li>Select "Open image in new tab"</li>
+                    <li>Copy the URL from the address bar</li>
+                    <li>Paste it in the "Or paste image URL directly" field above</li>
+                    <li>Or download the image and save it as <code>profile.jpg</code> in the <code>public</code> folder</li>
+                </ol>
+            `;
+        }
+
+        function previewImage() {
+            const imageUrl = document.getElementById('imageUrl').value;
+            const resultDiv = document.getElementById('result');
+            const imagePreview = document.getElementById('imagePreview');
+            const imageUrlText = document.getElementById('imageUrlText');
+            
+            if (!imageUrl) {
+                alert('Please enter an image URL');
+                return;
+            }
+            
+            resultDiv.style.display = 'block';
+            imagePreview.innerHTML = `<img src="${imageUrl}" alt="Profile Picture" style="max-width: 200px; border-radius: 50%; border: 3px solid #0077b5;" />`;
+            imageUrlText.innerHTML = `<p><strong>Image URL:</strong><br><code style="word-break: break-all;">${imageUrl}</code></p>`;
+        }
+
+        async function downloadImage() {
+            const imageUrl = document.getElementById('imageUrl').value;
+            if (!imageUrl) {
+                alert('Please enter an image URL first');
+                return;
+            }
+            
+            try {
+                const response = await fetch(imageUrl);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'profile.jpg';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                alert('Image downloaded! Save it as profile.jpg in the public folder.');
+            } catch (error) {
+                alert('Error downloading image. Please try right-clicking the image and selecting "Save image as..."');
+            }
+        }
+    </script>
+</body>
+</html>
+
