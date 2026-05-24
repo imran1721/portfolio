@@ -135,6 +135,29 @@ export default function HomePage() {
             </EmailLink>
           </div>
 
+          {/* Skybook teaser — surfaces the interactive portfolio above the fold */}
+          <a
+            href="https://skybook-lake.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-5 inline-flex items-center gap-2 rounded-full border border-sky-300/50 bg-sky-50/70 px-3 py-1.5 text-xs font-medium text-sky-900 hover:border-sky-400 hover:bg-sky-100 transition-colors"
+          >
+            <span
+              aria-hidden
+              className="inline-block h-1.5 w-1.5 rounded-full bg-sky-500 animate-pulse"
+            />
+            <span>
+              Prefer to fly through it? Try{" "}
+              <span className="font-semibold">Skybook</span>
+            </span>
+            <span
+              aria-hidden
+              className="text-sky-700 group-hover:translate-x-0.5 transition-transform"
+            >
+              ↗
+            </span>
+          </a>
+
           <div
             className="rise-in mt-10 flex flex-wrap gap-2"
             style={{ animationDelay: "380ms" }}
@@ -228,7 +251,13 @@ export default function HomePage() {
               real users.
             </p>
           </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            className={
+              personalProjects.length === 4
+                ? "grid grid-cols-1 sm:grid-cols-2 gap-6"
+                : "grid grid-cols-1 md:grid-cols-3 gap-6"
+            }
+          >
             {personalProjects.map((p, i) => (
               <Reveal key={p.slug} delay={i * 80}>
                 <ProjectCard project={p} />

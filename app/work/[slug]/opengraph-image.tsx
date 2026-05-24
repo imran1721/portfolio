@@ -41,6 +41,8 @@ export default async function OpenGraphImage({
       "linear-gradient(135deg, #10b981 0%, #f59e0b 50%, #be123c 100%)",
     vibin:
       "linear-gradient(135deg, #ec4899 0%, #a21caf 50%, #312e81 100%)",
+    "sky-book":
+      "linear-gradient(135deg, #0ea5e9 0%, #4f46e5 50%, #4c1d95 100%)",
   };
   const gradient =
     (project && gradients[project.slug]) ?? gradients["vibin"];

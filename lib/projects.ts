@@ -61,6 +61,8 @@ export type Project = {
   accentClass: string;
   /** Featured on home? */
   featured: boolean;
+  /** Mark a project as interactive — surfaces an "INTERACTIVE" badge on the card. */
+  interactive?: boolean;
   /** 1–2 short paragraphs setting context. */
   intro: string[];
   /** What was built (bullet list, ~4–6). */
@@ -543,6 +545,59 @@ export const PROJECTS: Project[] = [
       {
         label: "View on GitHub",
         href: "https://github.com/imran1721/stockpe",
+        variant: "secondary",
+      },
+    ],
+  },
+  {
+    slug: "sky-book",
+    name: "Sky Book",
+    tagline:
+      "Fly a paper plane through photorealistic 3D cities. Collect floating skill tags, surface project cards anchored to real buildings, watch the score tick up — this portfolio, as a game.",
+    context: "Personal project · interactive portfolio",
+    category: "personal",
+    dateRange: "2026",
+    stack: [
+      "Cesium",
+      "Google 3D Tiles",
+      "TypeScript",
+      "Vite",
+      "WebGL",
+    ],
+    hero: {
+      kind: "video",
+      src: "/media/sky-book.mp4",
+      poster: "/media/sky-book-poster.jpg",
+    },
+    accentClass: "text-sky-600",
+    featured: true,
+    interactive: true,
+    intro: [
+      "A creative reimagining of a portfolio site: instead of scrolling through cards, you fly a paper plane through photorealistic 3D cities and the projects surface as floating cards anchored to real buildings along the route.",
+      "Built on Cesium + Google's Map Tiles API (photorealistic 3D tiles) — same engine Google uses to render the 3D buildings in Maps. Keyboard-driven flight controls with bank physics on turns.",
+    ],
+    built: [
+      "Cesium viewer with Google Photorealistic 3D Tiles loaded via `Cesium3DTileset.fromUrl` — real cities, real building geometry.",
+      "Per-frame camera update driven by a `{ lat, lng, alt, heading, pitch }` flight state integrated from keyboard input (↑/↓ pitch, ←/→ turn with bank, W/S throttle, Space level out).",
+      "Fixed-centre paper-plane SVG with bank rotation derived from turn input — visual roll without moving the plane on screen.",
+      "Portfolio POIs are HTML cards projected to screen each frame via `SceneTransforms.wgs84ToWindowCoordinates`, faded by distance for smooth reveal/dismiss.",
+      "Hidden globe ellipsoid + Google attribution preserved per Maps Platform terms; API key restricted to deployed origin in production.",
+    ],
+    deepDive: [
+      {
+        title: "Why this is technically interesting",
+        body: "Most portfolio sites are scroll-driven 2D layouts. This one renders a continuous 3D scene at 60fps with photorealistic city geometry streaming in from Google's Map Tiles API, and overlays DOM elements that track the WebGL camera in real time. The fun engineering problem is the bridge: every frame, project the WGS84 location of each card to a screen pixel and fade it by distance, while keeping the plane visually centred and the rest of the world banking around it.",
+      },
+    ],
+    links: [
+      {
+        label: "Live: skybook-lake.vercel.app",
+        href: "https://skybook-lake.vercel.app/",
+        variant: "primary",
+      },
+      {
+        label: "View on GitHub",
+        href: "https://github.com/imran1721/Skybook",
         variant: "secondary",
       },
     ],

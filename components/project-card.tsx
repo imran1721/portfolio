@@ -8,9 +8,21 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/work/${project.slug}`}
-      className="group block rounded-2xl border border-zinc-200 bg-white p-2 transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-zinc-300 hover:shadow-[0_18px_40px_-20px_rgba(13,148,136,0.35)]"
+      className="group relative block rounded-2xl border border-zinc-200 bg-white p-2 transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-zinc-300 hover:shadow-[0_18px_40px_-20px_rgba(13,148,136,0.35)]"
     >
       <Media media={project.hero} className="rounded-lg" />
+      {project.interactive && (
+        <span
+          aria-label="Interactive project"
+          className="absolute right-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-sky-500/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white shadow-lg shadow-sky-500/40 backdrop-blur ring-1 ring-white/30"
+        >
+          <span
+            aria-hidden
+            className="inline-block h-1.5 w-1.5 rounded-full bg-white animate-pulse"
+          />
+          Interactive · Playable
+        </span>
+      )}
       <div className="p-4 sm:p-5">
         <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide text-zinc-500">
           <span className={cn("font-medium", project.accentClass)}>
