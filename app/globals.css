@@ -1,26 +1,178 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Brand palette — monochrome + teal accent (matches Lepton/Plex brand vibe) */
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a;
+  --color-muted: #71717a;        /* zinc-500 */
+  --color-muted-foreground: #52525b; /* zinc-600 */
+  --color-surface: #fafafa;       /* zinc-50 */
+  --color-surface-2: #f4f4f5;     /* zinc-100 */
+  --color-border: #e4e4e7;        /* zinc-200 */
+  --color-border-strong: #d4d4d8; /* zinc-300 */
+
+  /* Accent — teal (hue 168°, matches Lepton brand-600) */
+  --color-accent: #0d9488;        /* teal-600 */
+  --color-accent-hover: #0f766e;  /* teal-700 */
+  --color-accent-soft: #ccfbf1;   /* teal-100 — wash backgrounds */
+
+  /* Fonts */
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html[data-scroll-behavior="smooth"] {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-feature-settings: "ss01", "ss03";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Selection styling */
+::selection {
+  background: var(--color-accent);
+  color: white;
+}
+
+/* Reusable utility-style helpers */
+.hairline {
+  border-top: 1px solid var(--color-border);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* Subtle link underline animation */
+.link-underline {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  transition: transform 200ms ease;
+}
+.link-underline:hover::after {
+  transform: scaleX(1.02);
+}
+
+/* ===== Motion =====
+   Easing curves — natural deceleration only, no bounce. */
+:root {
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hero load choreography — used with stagger via inline style delay. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise-in {
+  animation: rise-in 600ms var(--ease-out-quint) both;
+}
+
+/* Scroll-reveal: starts hidden, transitions in once <Reveal> flips data-visible */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 600ms var(--ease-out-quint),
+    transform 600ms var(--ease-out-quint);
+  will-change: opacity, transform;
+}
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animated gradient text — slow background drift */
+@keyframes gradient-drift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+.gradient-text-drift {
+  background-size: 200% 200%;
+  animation: gradient-drift 12s ease-in-out infinite;
+}
+
+/* Hero backdrop blobs — large, slow, GPU-only */
+@keyframes blob-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(60px, -40px, 0) scale(1.08); }
+}
+@keyframes blob-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-50px, 30px, 0) scale(1.12); }
+}
+.blob-a {
+  animation: blob-drift-a 22s ease-in-out infinite;
+  will-change: transform;
+}
+.blob-b {
+  animation: blob-drift-b 28s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Card gradient breathe — used on Media placeholder */
+@keyframes breathe {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+.breathe {
+  background-size: 200% 200%;
+  animation: breathe 14s ease-in-out infinite;
+}
+
+/* Email toast — rises from below, fades in */
+@keyframes email-toast {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+.email-toast {
+  animation: email-toast 240ms var(--ease-out-quint);
+}
+
+/* Respect reduced motion — collapse all animations and transitions. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
