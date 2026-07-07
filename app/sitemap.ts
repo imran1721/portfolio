@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { PROJECTS } from "@/lib/projects";
 
-const BASE = "https://portfolio-imran-ansari.vercel.app";
+const BASE = "https://imran.ansari.vibin.click";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

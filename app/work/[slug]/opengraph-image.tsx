@@ -43,6 +43,8 @@ export default async function OpenGraphImage({
       "linear-gradient(135deg, #ec4899 0%, #a21caf 50%, #312e81 100%)",
     "sky-book":
       "linear-gradient(135deg, #0ea5e9 0%, #4f46e5 50%, #4c1d95 100%)",
+    byte:
+      "linear-gradient(135deg, #f59e0b 0%, #b45309 50%, #18181b 100%)",
   };
   const gradient =
     (project && gradients[project.slug]) ?? gradients["vibin"];
@@ -115,7 +117,7 @@ export default async function OpenGraphImage({
             letterSpacing: 1,
           }}
         >
-          portfolio-imran-ansari.vercel.app
+          imran.ansari.vibin.click
         </div>
       </div>
     ),
