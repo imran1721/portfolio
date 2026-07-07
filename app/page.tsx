@@ -137,7 +137,7 @@ export default function HomePage() {
 
           {/* Skybook teaser — surfaces the interactive portfolio above the fold */}
           <a
-            href="https://skybook-lake.vercel.app/"
+            href="https://skybook.vibin.click/"
             target="_blank"
             rel="noopener noreferrer"
             className="group mt-5 inline-flex items-center gap-2 rounded-full border border-sky-300/50 bg-sky-50/70 px-3 py-1.5 text-xs font-medium text-sky-900 hover:border-sky-400 hover:bg-sky-100 transition-colors"

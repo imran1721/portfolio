@@ -19,7 +19,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://portfolio-imran-ansari.vercel.app"),
+  metadataBase: new URL("https://imran.ansari.vibin.click"),
   title: {
     default: "Imran Ansari — Senior Full-Stack Engineer",
     template: "%s · Imran Ansari",

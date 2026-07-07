@@ -591,13 +591,65 @@ export const PROJECTS: Project[] = [
     ],
     links: [
       {
-        label: "Live: skybook-lake.vercel.app",
-        href: "https://skybook-lake.vercel.app/",
+        label: "Live: skybook.vibin.click",
+        href: "https://skybook.vibin.click/",
         variant: "primary",
       },
       {
         label: "View on GitHub",
         href: "https://github.com/imran1721/Skybook",
+        variant: "secondary",
+      },
+    ],
+  },
+  {
+    slug: "byte",
+    name: "byte",
+    tagline:
+      "Tech in bite-size — a TikTok-style vertical feed of new dev tools, aggregated from 6 sources and ranked so the fresh + well-liked stuff floats to the top.",
+    context: "Personal project",
+    category: "personal",
+    dateRange: "2026",
+    stack: [
+      "Next.js 15",
+      "React 19",
+      "Tailwind",
+      "ISR / server fetch",
+      "TypeScript",
+    ],
+    hero: {
+      kind: "video",
+      src: "/media/byte.mp4",
+      poster: "/media/byte-poster.jpg",
+    },
+    accentClass: "text-amber-600",
+    featured: true,
+    intro: [
+      "byte is a full-screen, snap-scrolling feed of the tools, libraries, and projects the dev world is liking right now — one card per item, infinite scroll, like TikTok for tech.",
+      "It aggregates six sources (Hacker News, GitHub, Dev.to, Lobsters, Product Hunt, and more) into one normalized feed, then ranks and dedupes so the freshest well-liked items surface first.",
+    ],
+    built: [
+      "Six source adapters (Algolia HN, GitHub Search, Dev.to, Lobsters, Product Hunt) normalized behind one `FeedItem` model — add a source by dropping in one file.",
+      "Trending rank via the classic HN gravity shape: popularity damped by `log`, decayed by age; cross-source dedupe.",
+      "Card enrichment fetches each link's `og:description` and `og:image` so every item explains what it is and shows a visual.",
+      "Keyword classifier categorizes items (AI, Dev Tools, Web, Data & Infra, …) with no LLM — instant.",
+      "First-run interest picker (saved to `localStorage`) drives a personalized For You view; server-side pagination gives effectively infinite scroll.",
+    ],
+    deepDive: [
+      {
+        title: "Fast without an LLM or a database",
+        body: "The whole feed is server `fetch` with ISR (30-min revalidate) streamed via `loading.tsx`, so prod serves the cached feed near-instantly and the animated splash holds only until real content paints. Ranking, dedupe, and categorization are plain functions — no vector store, no model call — which keeps each request cheap and the classifier instant.",
+      },
+    ],
+    links: [
+      {
+        label: "Live: byte.vibin.click",
+        href: "https://byte.vibin.click/",
+        variant: "primary",
+      },
+      {
+        label: "View on GitHub",
+        href: "https://github.com/imran1721/byte",
         variant: "secondary",
       },
     ],
